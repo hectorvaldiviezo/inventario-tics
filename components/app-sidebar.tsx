@@ -11,10 +11,13 @@ import {
   PiggyBank,
   List,
   FileStack,
+  Laptop,
+  Settings,
+  NotepadText,
 } from "lucide-react";
 
 import { NavItems } from "@/components/nav-projects";
-// import { NavUser } from "@/components/nav-user";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -56,50 +59,27 @@ const data = {
       plan: "Free",
     },
   ],
-  navSecondary: [
-    {
-      title: "Saldo",
-      url: "/saldo",
-      icon: PiggyBank,
-      number: "0",
-    },
-    {
-      title: "Carrito",
-      url: "/carrito",
-      icon: ShoppingCart,
-      number: "0",
-    },
-  ],
+  navSecondary: [],
   items: [
     {
       name: "Inicio",
-      url: "/inicio",
+      url: "/",
       icon: Home,
     },
     {
-      name: "Almuerzos",
-      url: "/almuerzos",
-      icon: Sandwich,
+      name: "Equipos",
+      url: "/equipos",
+      icon: Laptop,
     },
     {
-      name: "Historial de Almuerzos",
-      url: "/historial-almuerzos",
-      icon: GalleryVerticalEnd,
+      name: "Reportes",
+      url: "/reportes",
+      icon: NotepadText,
     },
     {
-      name: "Productos",
-      url: "/productos",
-      icon: Apple,
-    },
-    {
-      name: "Historial Saldo",
-      url: "/historial-saldo",
-      icon: List,
-    },
-    {
-      name: "Historial Productos",
-      url: "/historial-productos",
-      icon: FileStack,
+      name: "Configuración",
+      url: "/configuracion",
+      icon: Settings,
     },
   ],
 };
@@ -118,13 +98,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <a href="">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
-                  <img className="object-cover" src="/logo.png" alt="SM" />
+                  <img className="object-cover" src="/gplogo.svg" alt="Gp" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">
-                    IEP "Santo Toribio de Mogrovejo"
-                  </span>
-                  <span className="">Comedor</span>
+                  <span className="font-semibold">Inventario de Equipos</span>
+                  <span className="">GP</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -138,7 +116,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        {/* <NavUser /> */}
+        <NavUser />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

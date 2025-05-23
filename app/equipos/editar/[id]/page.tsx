@@ -1,24 +1,36 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { SelectInput } from "@/components/adaptive-inputs/select-input"
-import { DateInput } from "@/components/adaptive-inputs/date-input"
-import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useInventoryStore } from "@/store/inventory-store"
-import { toast } from "@/hooks/use-toast"
+import { use, useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { SelectInput } from "@/components/adaptive-inputs/select-input";
+import { DateInput } from "@/components/adaptive-inputs/date-input";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useInventoryStore } from "@/store/inventory-store";
+import { toast } from "@/hooks/use-toast";
 
-export default function EditarEquipoPage({ params }: { params: { id: string } }) {
-  const router = useRouter()
-  const { getEquipo, updateEquipo } = useInventoryStore()
+export default function EditarEquipoPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
+  const router = useRouter();
+  const { getEquipo, updateEquipo } = useInventoryStore();
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -31,10 +43,10 @@ export default function EditarEquipoPage({ params }: { params: { id: string } })
     responsable: "",
     descripcion: "",
     notas: "",
-  })
+  });
 
   useEffect(() => {
-    const equipo = getEquipo(params.id)
+    const equipo = getEquipo(id);
     if (equipo) {
       setFormData({
         nombre: equipo.nombre,
@@ -42,37 +54,41 @@ export default function EditarEquipoPage({ params }: { params: { id: string } })
         categoria: equipo.categoria,
         estado: equipo.estado,
         ubicacion: equipo.ubicacion,
-        fechaAdquisicion: equipo.fechaAdquisicion ? new Date(equipo.fechaAdquisicion) : undefined,
+        fechaAdquisicion: equipo.fechaAdquisicion
+          ? new Date(equipo.fechaAdquisicion)
+          : undefined,
         valor: equipo.valor ? String(equipo.valor) : "",
         responsable: equipo.responsable || "",
         descripcion: equipo.descripcion || "",
         notas: equipo.notas || "",
-      })
+      });
     } else {
       toast({
         title: "Error",
         description: "Equipo no encontrado",
         variant: "destructive",
-      })
-      router.push("/equipos")
+      });
+      router.push("/equipos");
     }
-  }, [params.id, getEquipo, router])
+  }, [id, getEquipo, router]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSelectChange = (name: string) => (value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleDateChange = (date: Date | undefined) => {
-    setFormData((prev) => ({ ...prev, fechaAdquisicion: date }))
-  }
+    setFormData((prev) => ({ ...prev, fechaAdquisicion: date }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Validación básica
     if (!formData.nombre || !formData.categoria || !formData.ubicacion) {
@@ -80,12 +96,12 @@ export default function EditarEquipoPage({ params }: { params: { id: string } })
         title: "Error",
         description: "Por favor completa los campos obligatorios",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
     // Actualizar equipo
-    updateEquipo(params.id, {
+    updateEquipo(id, {
       nombre: formData.nombre,
       serial: formData.serial,
       categoria: formData.categoria,
@@ -96,15 +112,15 @@ export default function EditarEquipoPage({ params }: { params: { id: string } })
       responsable: formData.responsable,
       descripcion: formData.descripcion,
       notas: formData.notas,
-    })
+    });
 
     toast({
       title: "Éxito",
       description: "Equipo actualizado correctamente",
-    })
+    });
 
-    router.push("/equipos")
-  }
+    router.push("/equipos");
+  };
 
   const categoryOptions = [
     { value: "Computadoras", label: "Computadoras" },
@@ -113,13 +129,13 @@ export default function EditarEquipoPage({ params }: { params: { id: string } })
     { value: "Redes", label: "Equipos de Red" },
     { value: "Periféricos", label: "Periféricos" },
     { value: "Otros", label: "Otros" },
-  ]
+  ];
 
   const statusOptions = [
     { value: "Activo", label: "Activo" },
     { value: "Mantenimiento", label: "En Mantenimiento" },
     { value: "Obsoleto", label: "Obsoleto" },
-  ]
+  ];
 
   return (
     <div className="space-y-6">
@@ -131,8 +147,12 @@ export default function EditarEquipoPage({ params }: { params: { id: string } })
           </Button>
         </Link>
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-primary">Editar Equipo</h1>
-          <p className="text-muted-foreground">Actualiza la información del equipo</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-primary">
+            Editar Equipo
+          </h1>
+          <p className="text-muted-foreground">
+            Actualiza la información del equipo
+          </p>
         </div>
       </div>
 
@@ -140,7 +160,9 @@ export default function EditarEquipoPage({ params }: { params: { id: string } })
         <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardTitle>Información del Equipo</CardTitle>
-            <CardDescription>Modifica los detalles del equipo seleccionado</CardDescription>
+            <CardDescription>
+              Modifica los detalles del equipo seleccionado
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -276,5 +298,5 @@ export default function EditarEquipoPage({ params }: { params: { id: string } })
         </form>
       </Card>
     </div>
-  )
+  );
 }

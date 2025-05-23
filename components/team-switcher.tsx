@@ -15,11 +15,44 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+
+interface Empresa {
+  id: number;
+  abreviatura: string;
+  nombre: string;
+  logo: string;
+}
+const empresas: Empresa[] = [
+  {
+    id: 1,
+    abreviatura: "TP",
+    nombre: "Transportes Pakatnamu",
+    logo: "/placeholder.svg",
+  },
+  {
+    id: 2,
+    abreviatura: "DP",
+    nombre: "Deposito Pakatnamu",
+    logo: "/placeholder.svg",
+  },
+  {
+    id: 3,
+    abreviatura: "GP",
+    nombre: "Grupo Pakatnamu",
+    logo: "/placeholder.svg",
+  },
+];
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar();
+
+  const [empresa, setEmpresa] = useState(empresas[0]);
+
+  const handleSelectedEmpresa = (empresa: Empresa) => {
+    setEmpresa(empresa);
+  };
 
   return (
     <SidebarMenu>
@@ -32,14 +65,14 @@ export function TeamSwitcher() {
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <Avatar>
-                  <AvatarImage src={"placeholder.svg"} alt={"placeholder"} />
+                  <AvatarImage src={empresa.logo} alt={empresa.nombre} />
                   <AvatarFallback className="bg-transparent">
-                    {"A"}
+                    {empresa.abreviatura}
                   </AvatarFallback>
                 </Avatar>
               </div>
               <div className="grid flex-1 text-left text-xs leading-tight">
-                <span className="truncate font-semibold">{"Hector"}</span>
+                <span className="truncate font-semibold">{empresa.nombre}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -51,7 +84,7 @@ export function TeamSwitcher() {
             sideOffset={4}
           >
             <DropdownMenuLabel className="text-xs text-muted-foreground">
-              Estudiantes
+              Empresas
             </DropdownMenuLabel>
             {/* {estudiantes.length === 0 && (
               <DropdownMenuItem className="gap-2 p-2 text-xs">
@@ -78,6 +111,32 @@ export function TeamSwitcher() {
                 {estudiante.nombre_completo}
               </DropdownMenuItem>
             ))} */}
+            {empresas.length === 0 && (
+              <DropdownMenuItem className="gap-2 p-2 text-xs">
+                No hay estudiantes
+              </DropdownMenuItem>
+            )}
+            {empresas.map((empresa) => (
+              <DropdownMenuItem
+                key={empresa.id}
+                onClick={() => handleSelectedEmpresa(empresa)}
+                className="gap-4 p-2 text-xs"
+              >
+                <div className="flex size-6 items-center justify-center rounded-sm border">
+                  <Avatar>
+                    <AvatarImage
+                      className="p-2"
+                      src={empresa?.logo}
+                      alt={empresa?.logo}
+                    />
+                    <AvatarFallback className="bg-transparent">
+                      {empresa?.abreviatura}
+                    </AvatarFallback>
+                  </Avatar>
+                </div>
+                {empresa.nombre}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
