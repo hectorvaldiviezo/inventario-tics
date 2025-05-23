@@ -184,13 +184,13 @@ export default function NuevoEquipoPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="ubicacion">Ubicación *</Label>
+                <Label htmlFor="ubicacion">Sede *</Label>
                 <Input
                   id="ubicacion"
                   name="ubicacion"
                   value={formData.ubicacion}
                   onChange={handleChange}
-                  placeholder="Ej: Oficina Principal"
+                  placeholder="Ej: Sede Leguía"
                   className="bg-background"
                   required
                 />

@@ -1,32 +1,48 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BarChart, PieChart, LineChart } from "lucide-react"
-import Link from "next/link"
-import InventarioResumen from "@/components/inventario-resumen"
-import EquiposRecientes from "@/components/equipos-recientes"
-import { useInventoryStore } from "@/store/inventory-store"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BarChart, PieChart, LineChart } from "lucide-react";
+import Link from "next/link";
+import InventarioResumen from "@/components/inventario-resumen";
+import EquiposRecientes from "@/components/equipos-recientes";
+import { useInventoryStore } from "@/store/inventory-store";
 
 export default function Home() {
-  const { equipos } = useInventoryStore()
+  const { equipos } = useInventoryStore();
 
   // Calcular estadísticas
-  const totalEquipos = equipos.length
-  const equiposActivos = equipos.filter((e) => e.estado === "Activo").length
-  const equiposMantenimiento = equipos.filter((e) => e.estado === "Mantenimiento").length
-  const equiposObsoletos = equipos.filter((e) => e.estado === "Obsoleto").length
+  const totalEquipos = equipos.length;
+  const equiposActivos = equipos.filter((e) => e.estado === "Activo").length;
+  const equiposMantenimiento = equipos.filter(
+    (e) => e.estado === "Mantenimiento"
+  ).length;
+  const equiposObsoletos = equipos.filter(
+    (e) => e.estado === "Obsoleto"
+  ).length;
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-primary">Dashboard</h1>
-          <p className="text-muted-foreground">Bienvenido al sistema de inventario</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-primary">
+            Dashboard
+          </h1>
+          <p className="text-muted-foreground">
+            Bienvenido al sistema de inventario
+          </p>
         </div>
         <Link href="/equipos/nuevo">
-          <Button className="bg-primary hover:bg-primary/90">Agregar Equipo</Button>
+          <Button className="bg-primary hover:bg-primary/90">
+            Agregar Equipo
+          </Button>
         </Link>
       </div>
 
@@ -55,7 +71,9 @@ export default function Home() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Equipos Activos</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Equipos Activos
+            </CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -79,7 +97,9 @@ export default function Home() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">En Mantenimiento</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              En Mantenimiento
+            </CardTitle>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -96,7 +116,8 @@ export default function Home() {
           <CardContent>
             <div className="text-2xl font-bold">{equiposMantenimiento}</div>
             <p className="text-xs text-muted-foreground">
-              {((equiposMantenimiento / totalEquipos) * 100).toFixed(1)}% del total
+              {((equiposMantenimiento / totalEquipos) * 100).toFixed(1)}% del
+              total
             </p>
           </CardContent>
         </Card>
@@ -127,15 +148,24 @@ export default function Home() {
 
       <Tabs defaultValue="resumen" className="space-y-4">
         <TabsList className="bg-background border">
-          <TabsTrigger value="resumen" className="data-[state=active]:bg-primary data-[state=active]:text-white">
+          <TabsTrigger
+            value="resumen"
+            className="data-[state=active]:bg-primary data-[state=active]:text-white"
+          >
             <BarChart className="h-4 w-4 mr-2" />
             Resumen
           </TabsTrigger>
-          <TabsTrigger value="recientes" className="data-[state=active]:bg-primary data-[state=active]:text-white">
+          <TabsTrigger
+            value="recientes"
+            className="data-[state=active]:bg-primary data-[state=active]:text-white"
+          >
             <LineChart className="h-4 w-4 mr-2" />
             Recientes
           </TabsTrigger>
-          <TabsTrigger value="categorias" className="data-[state=active]:bg-primary data-[state=active]:text-white">
+          <TabsTrigger
+            value="categorias"
+            className="data-[state=active]:bg-primary data-[state=active]:text-white"
+          >
             <PieChart className="h-4 w-4 mr-2" />
             Categorías
           </TabsTrigger>
@@ -150,7 +180,9 @@ export default function Home() {
           <Card>
             <CardHeader>
               <CardTitle>Distribución por Categorías</CardTitle>
-              <CardDescription>Distribución de equipos por categoría en el inventario</CardDescription>
+              <CardDescription>
+                Distribución de equipos por categoría en el inventario
+              </CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
               <div className="h-[300px] flex items-center justify-center text-muted-foreground">
@@ -161,5 +193,5 @@ export default function Home() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

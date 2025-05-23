@@ -29,19 +29,25 @@ const empresas: Empresa[] = [
     id: 1,
     abreviatura: "TP",
     nombre: "Transportes Pakatnamu",
-    logo: "/placeholder.svg",
+    logo: "/placeholder1.svg",
   },
   {
     id: 2,
     abreviatura: "DP",
     nombre: "Deposito Pakatnamu",
-    logo: "/placeholder.svg",
+    logo: "/placeholder1.svg",
   },
   {
     id: 3,
+    abreviatura: "AP",
+    nombre: "Automotores Pakatnamu",
+    logo: "/placeholder1.svg",
+  },
+  {
+    id: 4,
     abreviatura: "GP",
     nombre: "Grupo Pakatnamu",
-    logo: "/placeholder.svg",
+    logo: "/placeholder1.svg",
   },
 ];
 

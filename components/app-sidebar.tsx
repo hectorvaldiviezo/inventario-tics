@@ -76,11 +76,11 @@ const data = {
       url: "/reportes",
       icon: NotepadText,
     },
-    {
-      name: "Configuración",
-      url: "/configuracion",
-      icon: Settings,
-    },
+    // {
+    //   name: "Configuración",
+    //   url: "/configuracion",
+    //   icon: Settings,
+    // },
   ],
 };
 

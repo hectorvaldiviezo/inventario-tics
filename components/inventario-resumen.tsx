@@ -1,12 +1,22 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
-import { useInventoryStore } from "@/store/inventory-store"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { useInventoryStore } from "@/store/inventory-store";
 
 export default function InventarioResumen() {
-  const { equipos } = useInventoryStore()
+  const { equipos } = useInventoryStore();
 
   // Datos de ejemplo para el gráfico
   const data = [
@@ -22,15 +32,17 @@ export default function InventarioResumen() {
     { name: "Oct", total: 16 },
     { name: "Nov", total: 11 },
     { name: "Dic", total: 7 },
-  ]
+  ];
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Adquisiciones Mensuales</CardTitle>
-        <CardDescription>Número de equipos adquiridos por mes durante el último año</CardDescription>
+        <CardDescription>
+          Número de equipos adquiridos por mes durante el último año
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ChartContainer
           config={{
             total: {
@@ -38,11 +50,17 @@ export default function InventarioResumen() {
               color: "hsl(var(--primary))",
             },
           }}
-          className="h-[300px]"
+          className="w-full"
         >
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
-              <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
+              <XAxis
+                dataKey="name"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
               <YAxis
                 stroke="#888888"
                 fontSize={12}
@@ -51,11 +69,15 @@ export default function InventarioResumen() {
                 tickFormatter={(value) => `${value}`}
               />
               <ChartTooltip content={<ChartTooltipContent />} cursor={false} />
-              <Bar dataKey="total" radius={[4, 4, 0, 0]} className="fill-primary" />
+              <Bar
+                dataKey="total"
+                radius={[4, 4, 0, 0]}
+                className="fill-primary"
+              />
             </BarChart>
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }
